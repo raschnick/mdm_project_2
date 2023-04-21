@@ -5,7 +5,7 @@ import java.util.Date;
 public class ContactForm {
     private String name;
     private String email;
-    private Date birthdate;
+    private String birthdate;
 
     public String getName() {
         return name;
@@ -23,11 +23,11 @@ public class ContactForm {
         this.email = email;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 }
