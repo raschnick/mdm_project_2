@@ -13,7 +13,7 @@ public class FormController {
 
     private static final Logger logger = LoggerFactory.getLogger(FormController.class);
 
-    @GetMapping("/")
+    @GetMapping("/contact")
     public String showForm(Model model) {
         model.addAttribute("contactForm", new ContactForm());
         return "form";
