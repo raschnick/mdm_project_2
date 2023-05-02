@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>A simple Form</title>
+    <title>a malicious URL detector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link th:href="@{/style.css}" rel="stylesheet"/>
 </head>
 <body>
-<h1>Contact Form</h1>
+<div class="donation-div">
+    <a class="btn btn-light" role="button">Donate</a>
+</div>
 <div>
-    <p><b>Name:</b> <span th:text="${contactForm.name}"></span></p>
-    <p><b>Email:</b> <span th:text="${contactForm.email}"></span></p>
-    <p><b>Birthdate:</b> <span th:text="${contactForm.birthdate}"></span></p>
+    <div class="url-form">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Result</h2>
+                <div class="col text-center">
+                    <p>
+                    <h2 th:if="${maliciousUrlForm.maliciousProbability >= 0.5}" class="text-warning">The URL is
+                        Malicious!</h2>
+                    <h2 th:if="${maliciousUrlForm.maliciousProbability < 0.5}" class="text-success">The URL is
+                        Benign!</h2>
+                    </p>
+                    <p><b>URL:</b> <span th:text="${maliciousUrlForm.url}"></span></p>
+                    <p><b>Malicious Probability:</b> <span th:text="${maliciousUrlForm.maliciousProbability}"></span>
+                    </p>
+                    <btn class="btn btn-secondary" onclick="window.location.href='/';">Check Another URL</btn>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <link th:href="@{/script.js}" rel="javascript"/>
 </div>
 </body>
 </html>

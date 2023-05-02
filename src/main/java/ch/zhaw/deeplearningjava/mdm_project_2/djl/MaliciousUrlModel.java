@@ -24,7 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /** Wraps Model object, definition. loading and training methods into a singleton object */
-class MaliciousUrlModel {
+public class MaliciousUrlModel {
 
     private static final Logger logger = LoggerFactory.getLogger(MaliciousUrlModel.class);
 
@@ -48,7 +48,7 @@ class MaliciousUrlModel {
      * Define the imperative model, returns a model object will all the layers sets model object to
      * the blocks Used for Bot training and inference.
      */
-    void defineModel() {
+    public void defineModel() {
         SequentialBlock block = new SequentialBlock();
         float dropoutProbability = (float) 0.5;
         int fullyConnected = 1024;
@@ -101,22 +101,14 @@ class MaliciousUrlModel {
         model.setBlock(block);
     }
 
-    static MaliciousUrlModel getInstance() {
+    public static MaliciousUrlModel getInstance() {
         return INSTANCE;
     }
 
     /** Load model. Note to call defineModel before calling this method, during inference. */
-    void loadModel() throws IOException, MalformedModelException {
+    public void loadModel() throws IOException, MalformedModelException {
         Path modelPath = Paths.get(modelDir);
-        Path modelFile = modelPath.resolve(modelName + "-0001.params");
-        if (Files.notExists(modelFile)) {
-            Files.createDirectories(modelPath);
-            logger.info("Downloading model file ...");
-            String url =
-                    "https://djl-ai.s3.amazonaws.com/resources/demo/malicious-url-model/maliciousURLCNNModel-0002.params";
-            Files.copy(new URL(url).openStream(), modelFile);
-            logger.info("Model download success.");
-        }
+        Path modelFile = modelPath.resolve(modelName + "-0002.params");
         model.load(modelPath, modelName);
     }
 
@@ -124,7 +116,7 @@ class MaliciousUrlModel {
      * Inference on loaded model. call loadModel before this. Call flow defineModel -> loadModel ->
      * inference Calls URL Translator for pre-process and post-process functionality
      */
-    Classifications inference(String url) {
+    public Classifications inference(String url) {
         UrlTranslator urlTranslator = new UrlTranslator();
         try (Predictor<String, Classifications> predictor = model.newPredictor(urlTranslator)) {
             return predictor.predict(url);
