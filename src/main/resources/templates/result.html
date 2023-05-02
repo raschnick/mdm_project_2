@@ -23,7 +23,9 @@
                     <p><b>URL:</b> <span th:text="${maliciousUrlForm.url}"></span></p>
                     <p><b>Malicious Probability:</b> <span th:text="${maliciousUrlForm.maliciousProbability}"></span>
                     </p>
-                    <btn class="btn btn-secondary" onclick="window.location.href='/';">Check Another URL</btn>
+                    <div class="form-group">
+                        <button class="btn btn-secondary button" onclick="window.location.href='/';">Check Another URL</button>
+                    </div>
                 </div>
             </div>
         </div>
