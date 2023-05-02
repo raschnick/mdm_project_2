@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>a malicious URL detector</title>
+    <title>Malicious URL detector</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link th:href="@{/style.css}" rel="stylesheet"/>
+    <link th:href="@{/favicon.ico}" rel="shortcut icon" type="image/ico"/>
 </head>
 <body>
 <div class="donation-div">
@@ -16,10 +17,8 @@
                 <h2 class="text-center">Result</h2>
                 <div class="col text-center">
                     <p>
-                    <h2 th:if="${maliciousUrlForm.maliciousProbability >= 0.5}" class="text-warning">The URL is
-                        Malicious!</h2>
-                    <h2 th:if="${maliciousUrlForm.maliciousProbability < 0.5}" class="text-success">The URL is
-                        Benign!</h2>
+                    <h2 th:if="${maliciousUrlForm.maliciousProbability >= 0.5}" class="text-warning" id="text-result">The URL is probably malicious!</h2>
+                    <h2 th:if="${maliciousUrlForm.maliciousProbability < 0.5}" class="text-success" id="text-result">The URL is probably benign!</h2>
                     </p>
                     <p><b>URL:</b> <span th:text="${maliciousUrlForm.url}"></span></p>
                     <p><b>Malicious Probability:</b> <span th:text="${maliciousUrlForm.maliciousProbability}"></span>
@@ -31,7 +30,8 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-    <link th:href="@{/script.js}" rel="javascript"/>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="/script.js"></script>
 </div>
 </body>
 </html>
