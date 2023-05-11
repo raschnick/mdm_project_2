@@ -39,13 +39,11 @@ public class MaliciousUrlModelService {
                         .addTrainingListeners(TrainingListener.Defaults.logging());
 
         try (Trainer trainer = model.newTrainer(config)) {
-            // initialize trainer with proper input shape
             trainer.initialize(CSVDataset.getInitializeShape());
             logger.info("Begin Training");
             EasyTrain.fit(trainer, EPOCH, datasets[0], datasets[1]);
         }
 
-        // save model
         model.setProperty("Epoch", String.valueOf(EPOCH));
         model.save(Paths.get("model"), "maliciousURLCNNModel");
     }

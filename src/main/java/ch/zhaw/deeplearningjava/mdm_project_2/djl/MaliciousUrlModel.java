@@ -13,17 +13,13 @@ import ai.djl.nn.core.Linear;
 import ai.djl.nn.norm.Dropout;
 import ai.djl.nn.pooling.Pool;
 import ai.djl.translate.TranslateException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/** Wraps Model object, definition. loading and training methods into a singleton object */
 public class MaliciousUrlModel {
 
     private static final Logger logger = LoggerFactory.getLogger(MaliciousUrlModel.class);
@@ -44,10 +40,6 @@ public class MaliciousUrlModel {
         modelDir = "model";
     }
 
-    /**
-     * Define the imperative model, returns a model object will all the layers sets model object to
-     * the blocks Used for Bot training and inference.
-     */
     public void defineModel() {
         SequentialBlock block = new SequentialBlock();
         float dropoutProbability = (float) 0.5;
@@ -105,17 +97,12 @@ public class MaliciousUrlModel {
         return INSTANCE;
     }
 
-    /** Load model. Note to call defineModel before calling this method, during inference. */
     public void loadModel() throws IOException, MalformedModelException {
         Path modelPath = Paths.get(modelDir);
         Path modelFile = modelPath.resolve(modelName + "-0002.params");
         model.load(modelPath, modelName);
     }
 
-    /**
-     * Inference on loaded model. call loadModel before this. Call flow defineModel -> loadModel ->
-     * inference Calls URL Translator for pre-process and post-process functionality
-     */
     public Classifications inference(String url) {
         UrlTranslator urlTranslator = new UrlTranslator();
         try (Predictor<String, Classifications> predictor = model.newPredictor(urlTranslator)) {

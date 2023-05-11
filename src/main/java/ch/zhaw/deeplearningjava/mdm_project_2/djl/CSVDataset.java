@@ -40,16 +40,9 @@ public class CSVDataset extends RandomAccessDataset {
     private Map<Character, Integer> alphabetsIndex;
     private List<CSVRecord> dataset;
 
-    /**
-     * Reads CSV File and sets up information for encoding.
-     *
-     * @param builder Builder subclass for building the dataset
-     */
     private CSVDataset(Builder builder) {
         super(builder);
         dataset = builder.dataset;
-        // Load CSV dataset into CSV REcords
-        // set encoding base information
         alphabets = ALL_CHARS.chars().mapToObj(e -> (char) e).collect(Collectors.toList());
         alphabetsIndex =
                 IntStream.range(0, alphabets.size()).boxed().collect(toMap(alphabets::get, i -> i));
@@ -59,9 +52,6 @@ public class CSVDataset extends RandomAccessDataset {
         return new Shape(1, ALL_CHARS.length(), FEATURE_LENGTH);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Record get(NDManager manager, long index) {
         NDList datum = new NDList();
@@ -73,20 +63,11 @@ public class CSVDataset extends RandomAccessDataset {
         return new Record(datum, label);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected long availableSize() {
         return dataset.size();
     }
 
-    /**
-     * Convert the URL string to NDArray encoded form
-     *
-     * @param manager NDManager for NDArray context
-     * @param url     URL in string format
-     */
     private NDArray encodeData(NDManager manager, String url) {
         NDArray encoded = manager.zeros(new Shape(alphabets.size(), FEATURE_LENGTH));
         char[] arrayText = url.toCharArray();
@@ -101,12 +82,6 @@ public class CSVDataset extends RandomAccessDataset {
         return encoded;
     }
 
-    /**
-     * Convert the label string to NDArray encoded form
-     *
-     * @param manager     NDManager for NDArray context
-     * @param isMalicious indicating if sample is malicious or not (label)
-     */
     private NDArray encodeLabel(NDManager manager, String isMalicious) {
         return manager.create(Float.parseFloat(isMalicious));
     }
