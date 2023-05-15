@@ -38,7 +38,6 @@ public class MaliciousUrlController {
         String url = maliciousUrlForm.getUrl();
         var classification = urlModel.inference(url);
         System.out.printf("Classification: %s\n", classification);
-        //maliciousUrlForm.setProbability(classification.toJson());
         maliciousUrlForm.setMaliciousProbability(classification.getProbabilities().get(1));
 
         tlModel.addAttribute("contactForm", maliciousUrlForm);
